@@ -9,8 +9,8 @@ shopt -s inherit_errexit 2>/dev/null || true
 
 trap 'echo "exit_code $? line $LINENO linecallfunc $BASH_COMMAND"' ERR
 
-changed_files=${CHANGED_FILES:-0}
-all_files=${ALL_FILES:-0}
+changed_files=${CHANGED_FILES:-unset}
+all_files=${ALL_FILES:-unset}
 
 NAME=pre-commit-bash.sh
 
@@ -62,13 +62,13 @@ done
 # main
 #
 
-if [[ "$changed_files" -eq 0 ]];then
+if [[ "$changed_files" == 'unset' ]];then
   files_arg=""
 else
   files_arg="--files $changed_files"
 fi
 
-if [[ "$all_files" -eq 0 ]];then
+if [[ "$all_files" == 'unset' ]];then
   all_files_arg=""
 else
   all_files_arg="--all-files"
